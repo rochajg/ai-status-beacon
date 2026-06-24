@@ -1,0 +1,19 @@
+host/pyproject.toml
+  s_d2193d6df48b9d::t_d4868f3e16f47b 16
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "15605885da7367d31f897b0368d164fd389f1a23",
+  "prompts": {},
+  "sessions": {
+    "s_d2193d6df48b9d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3f7c14a-c303-4a75-893e-d3fdd192e1ae",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "jorocha_meli <jordan.jrocha@mercadolivre.com>"
+    }
+  }
+}
