@@ -1,0 +1,21 @@
+scripts/flash.sh
+  s_d2193d6df48b9d::t_d6a0d161b6cd14 9-19,21
+host/beacon/serialio.py
+  s_d2193d6df48b9d::t_d5816a8d243da2 11-13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.13",
+  "base_commit_sha": "612d1ed081f888ff5783be5ec918a12dee13d77c",
+  "prompts": {},
+  "sessions": {
+    "s_d2193d6df48b9d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3f7c14a-c303-4a75-893e-d3fdd192e1ae",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "jorocha_meli <jordan.jrocha@mercadolivre.com>"
+    }
+  }
+}
