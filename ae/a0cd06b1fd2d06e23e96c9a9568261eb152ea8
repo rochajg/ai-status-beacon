@@ -1,0 +1,22 @@
+host/beacon/daemon.py
+  s_d2193d6df48b9d::t_7651854290f607 101,113
+  s_d2193d6df48b9d::t_55356d878fec0b 40,47-48,57,66-67
+host/beacon/serialio.py
+  s_d2193d6df48b9d::t_dc7863c3964dbf 38-39,48-53
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "aea0cd06b1fd2d06e23e96c9a9568261eb152ea8",
+  "prompts": {},
+  "sessions": {
+    "s_d2193d6df48b9d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3f7c14a-c303-4a75-893e-d3fdd192e1ae",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "jorocha_meli <jordan.jrocha@mercadolivre.com>"
+    }
+  }
+}
