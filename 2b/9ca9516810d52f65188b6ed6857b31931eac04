@@ -1,0 +1,23 @@
+host/tests/test_serialio.py
+  s_d2193d6df48b9d::t_ab2de42d4aec31 44-45,47-49,51,53-54,59-63,65-76,78,83-90
+  s_d2193d6df48b9d::t_22683769052d4b 46,50,52,55-58,64,77,79-82
+host/beacon/serialio.py
+  s_d2193d6df48b9d::t_50b9fda09edc8a 5
+  s_d2193d6df48b9d::t_49f71d72e17aa6 35-47
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "2b9ca9516810d52f65188b6ed6857b31931eac04",
+  "prompts": {},
+  "sessions": {
+    "s_d2193d6df48b9d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3f7c14a-c303-4a75-893e-d3fdd192e1ae",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "jorocha_meli <jordan.jrocha@mercadolivre.com>"
+    }
+  }
+}
