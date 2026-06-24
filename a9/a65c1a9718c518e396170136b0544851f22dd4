@@ -1,0 +1,23 @@
+host/beacon/cli.py
+  s_d2193d6df48b9d::t_4dde3e52e59feb 31
+  s_d2193d6df48b9d::t_6a3d815cc870c9 43-44
+  s_d2193d6df48b9d::t_694c054f26ce4d 3,10
+host/tests/test_cli.py
+  s_d2193d6df48b9d::t_a83b6c12b8e452 45-72
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "a9a65c1a9718c518e396170136b0544851f22dd4",
+  "prompts": {},
+  "sessions": {
+    "s_d2193d6df48b9d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3f7c14a-c303-4a75-893e-d3fdd192e1ae",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "jorocha_meli <jordan.jrocha@mercadolivre.com>"
+    }
+  }
+}
