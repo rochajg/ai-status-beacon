@@ -1,0 +1,21 @@
+host/beacon/serialio.py
+  s_d2193d6df48b9d::t_1709dc9523ada0 1,6-7,17-33
+host/tests/test_serialio.py
+  s_d2193d6df48b9d::t_846ded27c0fbca 1-43
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "1a660cd594befd4c6e94c49f9583c99837e80616",
+  "prompts": {},
+  "sessions": {
+    "s_d2193d6df48b9d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3f7c14a-c303-4a75-893e-d3fdd192e1ae",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "jorocha_meli <jordan.jrocha@mercadolivre.com>"
+    }
+  }
+}
