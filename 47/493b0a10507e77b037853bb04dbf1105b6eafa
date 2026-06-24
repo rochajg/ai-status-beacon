@@ -1,0 +1,21 @@
+host/beacon/daemon.py
+  s_d2193d6df48b9d::t_f61750ebf37cf5 1-103
+host/tests/test_daemon.py
+  s_d2193d6df48b9d::t_346bc0d1771796 1-174
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "47493b0a10507e77b037853bb04dbf1105b6eafa",
+  "prompts": {},
+  "sessions": {
+    "s_d2193d6df48b9d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3f7c14a-c303-4a75-893e-d3fdd192e1ae",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "jorocha_meli <jordan.jrocha@mercadolivre.com>"
+    }
+  }
+}
