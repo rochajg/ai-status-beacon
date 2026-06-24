@@ -1,0 +1,37 @@
+claude/settings.example.json
+  s_d2193d6df48b9d::t_783dcbaf64c75f 1-24
+host/beacon/cli.py
+  s_d2193d6df48b9d::t_0646a96bed5523 1-22
+firmware/states.py
+  s_d2193d6df48b9d::t_45f76b2b125277 1-34
+host/beacon/daemon.py
+  s_d2193d6df48b9d::t_7070327b013eaa 1
+firmware/hardware.py
+  s_d2193d6df48b9d::t_8625e0839229c7 1-29
+.gitignore
+  s_d2193d6df48b9d::t_ebad4e2b44cbce 1-21
+firmware/main.py
+  s_d2193d6df48b9d::t_34e68924ece79f 1-85
+host/beacon/serialio.py
+  s_d2193d6df48b9d::t_de5559c4837197 1-12
+scripts/flash.sh
+  s_d2193d6df48b9d::t_c8ec56c9ebf3b1 1-14
+host/pyproject.toml
+  s_d2193d6df48b9d::t_15e965b719ddc5 1-19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "8cc4afabb8be873496ad6f90fe09ae74f3ffec6f",
+  "prompts": {},
+  "sessions": {
+    "s_d2193d6df48b9d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3f7c14a-c303-4a75-893e-d3fdd192e1ae",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "jorocha_meli <jordan.jrocha@mercadolivre.com>"
+    }
+  }
+}
