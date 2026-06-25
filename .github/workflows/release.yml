@@ -52,13 +52,13 @@ jobs:
         with:
           submodules: recursive   # pulls pico-sdk and its own submodules
 
-      - name: Install ARM toolchain + CMake
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends \
-            gcc-arm-none-eabi g++-arm-none-eabi \
-            libnewlib-arm-none-eabi libstdc++-arm-none-eabi-newlib \
-            cmake ninja-build
+      - name: Install ARM GNU Toolchain
+        uses: carlosperate/arm-none-eabi-gcc-action@v1
+        with:
+          release: '13.2.Rel1'
+
+      - name: Install CMake + Ninja
+        run: sudo apt-get install -y --no-install-recommends cmake ninja-build
 
       - name: Build
         run: |
