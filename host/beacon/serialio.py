@@ -2,6 +2,7 @@
 
 import glob
 import os
+import socket as _socket
 
 import serial
 
@@ -31,3 +32,16 @@ def send_direct(state: str, port: str, timeout_s: float = 0.3) -> bool:
                 s.close()
             except Exception:
                 pass
+
+
+def send_to_socket(state: str, socket_path: str, timeout_s: float = 0.3) -> bool:
+    """Send state\n to the daemon Unix socket. Returns True on success."""
+    try:
+        sock = _socket.socket(_socket.AF_UNIX, _socket.SOCK_STREAM)
+        sock.settimeout(timeout_s)
+        sock.connect(socket_path)
+        sock.sendall(f"{state}\n".encode())
+        sock.close()
+        return True
+    except Exception:
+        return False
