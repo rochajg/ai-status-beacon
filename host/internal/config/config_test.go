@@ -141,3 +141,102 @@ func TestDefaultPath(t *testing.T) {
 		t.Fatal("DefaultPath returned empty string")
 	}
 }
+
+func TestSetCreatesFileAndSetsKey(t *testing.T) {
+	dir := t.TempDir()
+	p := filepath.Join(dir, "config.toml")
+
+	if err := Set(p, "brightness", "180"); err != nil {
+		t.Fatal(err)
+	}
+	cfg, _ := Load(p)
+	if cfg.Brightness == nil || *cfg.Brightness != 180 {
+		t.Fatalf("want 180, got %v", cfg.Brightness)
+	}
+}
+
+func TestSetColorThinking(t *testing.T) {
+	dir := t.TempDir()
+	p := filepath.Join(dir, "config.toml")
+
+	if err := Set(p, "color.thinking", "0,100,255"); err != nil {
+		t.Fatal(err)
+	}
+	cfg, _ := Load(p)
+	if cfg.Color.Thinking == nil {
+		t.Fatal("color.thinking not set")
+	}
+	if cfg.Color.Thinking.R != 0 || cfg.Color.Thinking.G != 100 || cfg.Color.Thinking.B != 255 {
+		t.Fatalf("unexpected color: %+v", cfg.Color.Thinking)
+	}
+}
+
+func TestSetPreservesExistingKeys(t *testing.T) {
+	dir := t.TempDir()
+	p := writeTOML(t, dir, "brightness = 200\n")
+
+	if err := Set(p, "color.thinking", "0,100,255"); err != nil {
+		t.Fatal(err)
+	}
+	cfg, _ := Load(p)
+	if cfg.Brightness == nil || *cfg.Brightness != 200 {
+		t.Fatal("existing brightness lost after Set")
+	}
+}
+
+func TestSetBuzzerEnabled(t *testing.T) {
+	dir := t.TempDir()
+	p := filepath.Join(dir, "config.toml")
+
+	if err := Set(p, "buzzer.enabled", "false"); err != nil {
+		t.Fatal(err)
+	}
+	cfg, _ := Load(p)
+	if cfg.Buzzer.Enabled == nil || *cfg.Buzzer.Enabled != false {
+		t.Fatal("buzzer.enabled not set to false")
+	}
+}
+
+func TestSetRejectsUnknownKey(t *testing.T) {
+	dir := t.TempDir()
+	p := filepath.Join(dir, "config.toml")
+	if err := Set(p, "color.rainbow", "1,2,3"); err == nil {
+		t.Fatal("expected error for unknown key")
+	}
+}
+
+func TestSetRejectsInvalidBrightness(t *testing.T) {
+	dir := t.TempDir()
+	p := filepath.Join(dir, "config.toml")
+	if err := Set(p, "brightness", "999"); err == nil {
+		t.Fatal("expected error for out-of-range brightness")
+	}
+}
+
+func TestSetRejectsInvalidColor(t *testing.T) {
+	dir := t.TempDir()
+	p := filepath.Join(dir, "config.toml")
+	if err := Set(p, "color.thinking", "not-a-color"); err == nil {
+		t.Fatal("expected error for invalid color")
+	}
+}
+
+func TestResetDeletesFile(t *testing.T) {
+	dir := t.TempDir()
+	p := writeTOML(t, dir, "brightness = 180\n")
+
+	if err := Reset(p); err != nil {
+		t.Fatal(err)
+	}
+	cfg, _ := Load(p) // missing file → empty config
+	if cfg.Brightness != nil {
+		t.Fatal("expected empty config after reset")
+	}
+}
+
+func TestResetNoErrorIfFileAbsent(t *testing.T) {
+	p := filepath.Join(t.TempDir(), "config.toml")
+	if err := Reset(p); err != nil {
+		t.Fatalf("unexpected error resetting absent file: %v", err)
+	}
+}
