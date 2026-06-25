@@ -1,0 +1,23 @@
+firmware/src/buzzer.h
+  s_d2193d6df48b9d::t_6db30f12572bd7 1-6
+firmware/src/buzzer.c
+  s_d2193d6df48b9d::t_bc94166ad541f2 1-29
+firmware/src/main.c
+  s_d2193d6df48b9d::t_ea3a9d1c09bf14 3,9-20
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "e03e52a181de362b32253c9706bb3d9bc6047e12",
+  "prompts": {},
+  "sessions": {
+    "s_d2193d6df48b9d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3f7c14a-c303-4a75-893e-d3fdd192e1ae",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Jordan Rocha <70rd23@gmail.com>"
+    }
+  }
+}
