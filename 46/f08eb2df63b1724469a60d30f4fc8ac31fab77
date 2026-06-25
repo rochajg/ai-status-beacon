@@ -1,0 +1,25 @@
+firmware/test/CMakeLists.txt
+  s_d2193d6df48b9d::t_4bfe4be1302925 1-10
+firmware/src/parser.c
+  s_d2193d6df48b9d::t_3b568f285e7527 1-83
+firmware/src/parser.h
+  s_d2193d6df48b9d::t_93f885ff9e8e1f 1-42
+firmware/test/test_parser.c
+  s_d2193d6df48b9d::t_e785a6d935beec 1-114
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "46f08eb2df63b1724469a60d30f4fc8ac31fab77",
+  "prompts": {},
+  "sessions": {
+    "s_d2193d6df48b9d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3f7c14a-c303-4a75-893e-d3fdd192e1ae",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Jordan Rocha <70rd23@gmail.com>"
+    }
+  }
+}
