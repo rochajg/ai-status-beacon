@@ -38,13 +38,14 @@ def run(
     srv.settimeout(0.5)  # allows the loop to periodically check stop_event
 
     ser: serial.Serial | None = None
+    serial_lock = threading.Lock()
     log.info("Daemon listening on %s", socket_path)
 
     try:
         while stop_event is None or not stop_event.is_set():
             # Keep serial connection alive
             if ser is None or not ser.is_open:
-                ser = _connect_serial(baud)
+                ser = _connect_serial(baud, stop_event)
 
             try:
                 conn, _ = srv.accept()
@@ -53,7 +54,7 @@ def run(
 
             threading.Thread(
                 target=_handle_connection,
-                args=(conn, ser),
+                args=(conn, ser, serial_lock),
                 daemon=True,
             ).start()
     finally:
@@ -66,10 +67,22 @@ def run(
             ser.close()
 
 
-def _connect_serial(baud: int) -> "serial.Serial | None":
+def _connect_serial(
+    baud: int,
+    stop_event: "threading.Event | None" = None,
+) -> "serial.Serial | None":
     """Discover the beacon serial port and open it. Returns None on failure."""
+
+    def _interruptible_sleep(seconds: float) -> None:
+        """Sleep for *seconds* but wake early if stop_event is set."""
+        if stop_event is not None:
+            stop_event.wait(timeout=seconds)
+        else:
+            time.sleep(seconds)
+
     port = serialio.find_port()
     if port is None:
+        _interruptible_sleep(RECONNECT_INTERVAL)
         return None
     try:
         ser = serial.Serial(port, baud, timeout=0.1)
@@ -79,11 +92,15 @@ def _connect_serial(baud: int) -> "serial.Serial | None":
         log.warning(
             "Serial open failed (%s), retrying in %.1fs", exc, RECONNECT_INTERVAL
         )
-        time.sleep(RECONNECT_INTERVAL)
+        _interruptible_sleep(RECONNECT_INTERVAL)
         return None
 
 
-def _handle_connection(conn: socket.socket, ser: "serial.Serial | None") -> None:
+def _handle_connection(
+    conn: socket.socket,
+    ser: "serial.Serial | None",
+    serial_lock: threading.Lock,
+) -> None:
     """Read one command from a client connection and forward it to serial."""
     try:
         data = conn.recv(64).strip()
@@ -96,7 +113,8 @@ def _handle_connection(conn: socket.socket, ser: "serial.Serial | None") -> None
         if ser is None or not ser.is_open:
             log.warning("Serial not available, dropping command %r", cmd)
             return
-        ser.write(cmd + b"\n")
+        with serial_lock:
+            ser.write(cmd + b"\n")
     except Exception as exc:
         log.warning("Connection handler error: %s", exc)
     finally:
