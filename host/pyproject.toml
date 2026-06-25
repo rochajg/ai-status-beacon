@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=70"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "beacon"
+version = "0.1.0"
+description = "Physical AI status indicator for Claude Code"
+requires-python = ">=3.11"
+dependencies = [
+    "pyserial>=3.5",
+]
+
+[project.scripts]
+beacon = "beacon.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["beacon*"]

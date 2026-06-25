@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# MicroPython compiled
+*.mpy
+
+# macOS
+.DS_Store
+._*
+
+# Tools
+.mpremote/
+
+# Local config
+.env
