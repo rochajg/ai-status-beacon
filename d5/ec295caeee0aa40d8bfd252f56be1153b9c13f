@@ -1,0 +1,23 @@
+firmware/src/states.h
+  s_d2193d6df48b9d::t_9f9f672861e072 1-11
+firmware/src/states.c
+  s_d2193d6df48b9d::t_83601207ce355b 1-165
+firmware/src/main.c
+  s_d2193d6df48b9d::t_d6982d5cc33001 2-3,5-8,12-18,20-40,42-44
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "d5ec295caeee0aa40d8bfd252f56be1153b9c13f",
+  "prompts": {},
+  "sessions": {
+    "s_d2193d6df48b9d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3f7c14a-c303-4a75-893e-d3fdd192e1ae",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Jordan Rocha <70rd23@gmail.com>"
+    }
+  }
+}
