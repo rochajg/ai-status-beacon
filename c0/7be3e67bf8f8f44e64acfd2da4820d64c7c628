@@ -1,0 +1,23 @@
+scripts/install.sh
+  s_d2193d6df48b9d::t_6589051d17e753 6
+README.md
+  s_d2193d6df48b9d::t_6048b9128233e7 32
+README.pt-br.md
+  s_d2193d6df48b9d::t_b4d339ff28ae7b 32
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "c07be3e67bf8f8f44e64acfd2da4820d64c7c628",
+  "prompts": {},
+  "sessions": {
+    "s_d2193d6df48b9d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3f7c14a-c303-4a75-893e-d3fdd192e1ae",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Jordan Rocha <70rd23@gmail.com>"
+    }
+  }
+}
