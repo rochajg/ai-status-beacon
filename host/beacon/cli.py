@@ -1,11 +1,13 @@
 """CLI entry point for the Status Beacon."""
 
+import pathlib
 import sys
 
 from beacon import serialio
 
 VALID_STATES = {"thinking", "waiting", "done", "idle", "error", "ping"}
 SOCKET_TIMEOUT = 0.3
+SOCKET_PATH = str(pathlib.Path.home() / ".beacon" / "beacon.sock")
 
 
 def main():
@@ -26,7 +28,7 @@ def main():
     if direct:
         _send_direct(state)
     else:
-        _send_via_socket(state) or _noop()
+        _send_via_socket(state)
 
     sys.exit(0)
 
@@ -38,11 +40,5 @@ def _send_direct(state: str) -> None:
     serialio.send_direct(state, port, timeout_s=SOCKET_TIMEOUT)
 
 
-def _send_via_socket(state: str) -> bool:
-    """Try to send via daemon socket. Returns True if sent."""
-    # M3: implemented in Task 6
-    return False
-
-
-def _noop() -> None:
-    pass
+def _send_via_socket(state: str) -> None:
+    serialio.send_to_socket(state, SOCKET_PATH, timeout_s=SOCKET_TIMEOUT)
