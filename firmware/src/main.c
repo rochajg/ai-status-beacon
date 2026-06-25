@@ -1,22 +1,45 @@
 #include "pico/stdlib.h"
-#include "led.h"
-#include "buzzer.h"
+#include "parser.h"
+#include "states.h"
 #include "config.h"
+#include <string.h>
+#include <stdio.h>
+
+#define LINE_BUF_SIZE 256
 
 int main(void) {
     stdio_init_all();
-    led_init(LED_PIN);
-    buzzer_init(BUZZER_PIN);
+    states_init();
 
-    /* Two beeps, then solid green -- mirrors the "done" state. */
-    led_set(DEF_DONE_R, DEF_DONE_G, DEF_DONE_B, DEF_BRIGHTNESS);
-    buzzer_start(BUZZER_PIN, DEF_BUZZER_FREQ);
-    sleep_ms(DEF_BUZZER_DUR_MS);
-    buzzer_stop(BUZZER_PIN);
-    sleep_ms(120);
-    buzzer_start(BUZZER_PIN, DEF_BUZZER_FREQ);
-    sleep_ms(DEF_BUZZER_DUR_MS);
-    buzzer_stop(BUZZER_PIN);
+    /* Signal readiness to the host */
+    printf("READY\n");
 
-    while (1) tight_loop_contents();
+    char    buf[LINE_BUF_SIZE];
+    size_t  pos = 0;
+
+    while (1) {
+        /* Non-blocking character read */
+        int c = getchar_timeout_us(0);
+        if (c != PICO_ERROR_TIMEOUT) {
+            if (c == '\n' || c == '\r') {
+                if (pos > 0) {
+                    buf[pos] = '\0';
+                    Command cmd;
+                    if (!parse_command(buf, &cmd)) {
+                        printf("ERR unknown %s\n", buf);
+                    } else if (cmd.state == STATE_PING) {
+                        printf("PONG\n");
+                    } else {
+                        states_set(&cmd);
+                    }
+                    pos = 0;
+                }
+            } else if (pos < LINE_BUF_SIZE - 1) {
+                buf[pos++] = (char)c;
+            }
+        }
+
+        states_tick();
+        sleep_ms(TICK_MS);
+    }
 }
