@@ -125,6 +125,7 @@ func TestDaemonRepliesPONGOnPing(t *testing.T) {
 func TestDaemonRemovesSocketOnShutdown(t *testing.T) {
 	fp := &fakePort{}
 	sock, cancel := startDaemon(t, fp)
+	defer cancel()
 
 	cancel()
 	time.Sleep(150 * time.Millisecond)

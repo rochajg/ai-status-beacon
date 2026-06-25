@@ -20,7 +20,7 @@ const reconnectInterval = 2 * time.Second
 
 var validStates = map[string]bool{
 	"thinking": true, "waiting": true, "done": true,
-	"idle": true, "error": true, "ping": true,
+	"idle": true, "error": true,
 }
 
 // portWriter is the minimal serial interface the daemon needs.
@@ -81,13 +81,22 @@ func runWithOpener(ctx context.Context, socketPath string, openPort func() (port
 				return
 			case <-ticker.C:
 				mu.Lock()
-				if current == nil {
-					if p, e := openPort(); e == nil {
-						current = p
-						log.Println("daemon: serial reconnected")
+				needOpen := current == nil
+				mu.Unlock()
+
+				if needOpen {
+					p, e := openPort()
+					if e == nil {
+						mu.Lock()
+						if current == nil {
+							current = p
+							log.Println("daemon: serial reconnected")
+						} else {
+							p.Close()
+						}
+						mu.Unlock()
 					}
 				}
-				mu.Unlock()
 			}
 		}
 	}()
@@ -142,14 +151,11 @@ func handle(conn net.Conn, mu *sync.Mutex, current *portWriter) {
 
 	mu.Lock()
 	p := *current
-	mu.Unlock()
-
 	if p == nil {
+		mu.Unlock()
 		log.Println("daemon: serial unavailable, dropping")
 		return
 	}
-
-	mu.Lock()
 	_, werr := p.Write([]byte(cmd + "\n"))
 	if werr != nil {
 		*current = nil
