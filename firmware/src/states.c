@@ -48,7 +48,9 @@ void states_init(void) {
     phase              = 0;
     entered_us         = time_us_64();
     buzzer_off_us      = 0;
-    led_off();
+    /* Do NOT call led_off() here — pio_sm_put_blocking stalls if the PIO
+     * FIFO is full and no data has been read yet. The LED is dark on power-up
+     * by default; the first states_tick() will handle idle state correctly. */
 }
 
 void states_set(const Command *cmd) {

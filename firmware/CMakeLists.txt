@@ -29,12 +29,11 @@ target_link_libraries(beacon
     hardware_pio
     hardware_pwm
     hardware_clocks
-    tinyusb_device
-    tinyusb_board
     m
 )
 
-# Enable USB CDC (replaces UART stdio)
+# Enable USB CDC — pico_enable_stdio_usb internally links tinyusb_device
+# and tinyusb_board. DO NOT link them manually or USB init conflicts.
 pico_enable_stdio_usb(beacon 1)
 pico_enable_stdio_uart(beacon 0)
 

@@ -9,9 +9,12 @@
 
 int main(void) {
     stdio_init_all();
-    states_init();
 
-    /* Signal readiness to the host */
+    /* Give USB 2s to enumerate on the host before hardware init.
+     * If hardware init hangs, USB will already be visible for diagnosis. */
+    sleep_ms(2000);
+
+    states_init();
     printf("READY\n");
 
     char    buf[LINE_BUF_SIZE];
