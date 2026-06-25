@@ -42,10 +42,10 @@ type Config struct {
 	} `toml:"buzzer,omitempty"`
 }
 
-// DefaultPath returns ~/.beacon/config.toml.
+// DefaultPath returns ~/.ai-beacon/config.toml.
 func DefaultPath() string {
 	home, _ := os.UserHomeDir()
-	return filepath.Join(home, ".beacon", "config.toml")
+	return filepath.Join(home, ".ai-beacon", "config.toml")
 }
 
 // Load reads path and returns a Config. Returns an empty Config (no error) if

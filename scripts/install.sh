@@ -5,7 +5,7 @@ set -euo pipefail
 
 REPO="rochajg/ai-status-beacon"
 INSTALL_DIR="${BEACON_INSTALL_DIR:-$HOME/.local/bin}"
-BINARY="$INSTALL_DIR/beacon"
+BINARY="$INSTALL_DIR/ai-beacon"
 
 # Detect architecture
 ARCH=$(uname -m)
@@ -31,7 +31,7 @@ fi
 echo "Installing beacon $TAG ($SUFFIX)..."
 
 # Download binary
-URL="https://github.com/$REPO/releases/download/$TAG/beacon-$SUFFIX"
+URL="https://github.com/$REPO/releases/download/$TAG/ai-beacon-$SUFFIX"
 mkdir -p "$INSTALL_DIR"
 curl -fsSL "$URL" -o "$BINARY"
 chmod +x "$BINARY"
@@ -52,6 +52,6 @@ echo ""
 echo "Next steps:"
 echo "  1. Flash MicroPython to your RP2040 Zero (see README)"
 echo "  2. Install firmware: pip install mpremote && ./scripts/flash.sh"
-echo "  3. Start the daemon:  beacon daemon &"
+echo "  3. Start the daemon:  ai-beacon daemon &"
 echo "  4. Add Claude Code hooks (see README)"
-echo "  5. Test: beacon status"
+echo "  5. Test: ai-beacon status"

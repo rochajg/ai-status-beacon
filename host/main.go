@@ -35,10 +35,10 @@ var (
 func init() {
 	home, err := os.UserHomeDir()
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "beacon: cannot determine home directory:", err)
+		fmt.Fprintln(os.Stderr, "ai-beacon: cannot determine home directory:", err)
 		os.Exit(1)
 	}
-	socketPath = filepath.Join(home, ".beacon", "beacon.sock")
+	socketPath = filepath.Join(home, ".ai-beacon", "ai-beacon.sock")
 }
 
 func main() {
@@ -147,15 +147,15 @@ func printUsage() {
 	fmt.Printf(`AI Status Beacon %s
 
 Usage:
-  beacon <state>                      send via daemon (exit 0 always)
-  beacon <state> --direct             send directly to serial (exit 0 always)
-  beacon daemon                       run the daemon (blocking)
-  beacon status                       daemon + device health (exit 0 or 1)
-  beacon config get                   show current config
-  beacon config set <key> <value>     write one config key
-  beacon config reset                 restore firmware defaults
-  beacon config path                  print config file path
-  beacon version                      print version
+  ai-beacon <state>                      send via daemon (exit 0 always)
+  ai-beacon <state> --direct             send directly to serial (exit 0 always)
+  ai-beacon daemon                       run the daemon (blocking)
+  ai-beacon status                       daemon + device health (exit 0 or 1)
+  ai-beacon config get                   show current config
+  ai-beacon config set <key> <value>     write one config key
+  ai-beacon config reset                 restore firmware defaults
+  ai-beacon config path                  print config file path
+  ai-beacon version                      print version
 
 States: thinking, waiting, done, idle, error
 `, version)
@@ -165,7 +165,7 @@ func runConfig(args []string) int {
 	cfgPath := config.DefaultPath()
 
 	if len(args) == 0 {
-		fmt.Fprintln(os.Stderr, "Usage: beacon config <get|set|reset|path>")
+		fmt.Fprintln(os.Stderr, "Usage: ai-beacon config <get|set|reset|path>")
 		return 1
 	}
 
@@ -176,7 +176,7 @@ func runConfig(args []string) int {
 
 	case "reset":
 		if err := config.Reset(cfgPath); err != nil {
-			fmt.Fprintln(os.Stderr, "beacon config reset:", err)
+			fmt.Fprintln(os.Stderr, "ai-beacon config reset:", err)
 			return 1
 		}
 		fmt.Println("Config reset to defaults.")
@@ -184,11 +184,11 @@ func runConfig(args []string) int {
 
 	case "set":
 		if len(args) != 3 {
-			fmt.Fprintln(os.Stderr, "Usage: beacon config set <key> <value>")
+			fmt.Fprintln(os.Stderr, "Usage: ai-beacon config set <key> <value>")
 			return 1
 		}
 		if err := config.Set(cfgPath, args[1], args[2]); err != nil {
-			fmt.Fprintln(os.Stderr, "beacon config set:", err)
+			fmt.Fprintln(os.Stderr, "ai-beacon config set:", err)
 			return 1
 		}
 		fmt.Printf("Set %s = %s\n", args[1], args[2])
@@ -197,7 +197,7 @@ func runConfig(args []string) int {
 	case "get":
 		cfg, err := config.Load(cfgPath)
 		if err != nil {
-			fmt.Fprintln(os.Stderr, "beacon config get:", err)
+			fmt.Fprintln(os.Stderr, "ai-beacon config get:", err)
 			return 1
 		}
 		printConfig(cfg, cfgPath)
@@ -205,7 +205,7 @@ func runConfig(args []string) int {
 
 	default:
 		fmt.Fprintf(os.Stderr, "unknown config command %q\n", args[0])
-		fmt.Fprintln(os.Stderr, "Usage: beacon config <get|set|reset|path>")
+		fmt.Fprintln(os.Stderr, "Usage: ai-beacon config <get|set|reset|path>")
 		return 1
 	}
 }

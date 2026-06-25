@@ -36,13 +36,13 @@ jobs:
           CGO_ENABLED: "0"
         run: |
           mkdir -p dist
-          cd host && go build -trimpath -ldflags="-s -w -X main.version=${{ github.ref_name }}" -o ../dist/beacon-${{ matrix.suffix }} .
+          cd host && go build -trimpath -ldflags="-s -w -X main.version=${{ github.ref_name }}" -o ../dist/ai-beacon-${{ matrix.suffix }} .
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: beacon-${{ matrix.suffix }}
-          path: dist/beacon-${{ matrix.suffix }}
+          name: ai-beacon-${{ matrix.suffix }}
+          path: dist/ai-beacon-${{ matrix.suffix }}
 
   firmware:
     name: Build firmware (UF2)
@@ -89,7 +89,7 @@ jobs:
       - name: Generate checksums
         run: |
           cd dist
-          sha256sum beacon-darwin-arm64 beacon-darwin-amd64 beacon.uf2 > checksums.txt
+          sha256sum ai-beacon-darwin-arm64 ai-beacon-darwin-amd64 beacon.uf2 > checksums.txt
           cat checksums.txt
 
       - name: Create GitHub Release
@@ -101,13 +101,13 @@ jobs:
 
             ### macOS (Apple Silicon)
             ```bash
-            curl -fsSL https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/beacon-darwin-arm64 -o ~/.local/bin/beacon
+            curl -fsSL https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/ai-beacon-darwin-arm64 -o ~/.local/bin/beacon
             chmod +x ~/.local/bin/beacon
             ```
 
             ### macOS (Intel)
             ```bash
-            curl -fsSL https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/beacon-darwin-amd64 -o ~/.local/bin/beacon
+            curl -fsSL https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/ai-beacon-darwin-amd64 -o ~/.local/bin/beacon
             chmod +x ~/.local/bin/beacon
             ```
 
@@ -122,8 +122,8 @@ jobs:
             ---
             See [README](https://github.com/${{ github.repository }}#readme) for full setup instructions.
           files: |
-            dist/beacon-darwin-arm64
-            dist/beacon-darwin-amd64
+            dist/ai-beacon-darwin-arm64
+            dist/ai-beacon-darwin-amd64
             dist/beacon.uf2
             dist/checksums.txt
           draft: false

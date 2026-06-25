@@ -2,22 +2,22 @@
   "hooks": {
     "UserPromptSubmit": [
       {
-        "hooks": [{ "type": "command", "command": "beacon thinking" }]
+        "hooks": [{ "type": "command", "command": "ai-beacon thinking" }]
       }
     ],
     "Notification": [
       {
-        "hooks": [{ "type": "command", "command": "beacon waiting" }]
+        "hooks": [{ "type": "command", "command": "ai-beacon waiting" }]
       }
     ],
     "Stop": [
       {
-        "hooks": [{ "type": "command", "command": "beacon done" }]
+        "hooks": [{ "type": "command", "command": "ai-beacon done" }]
       }
     ],
     "SessionEnd": [
       {
-        "hooks": [{ "type": "command", "command": "beacon idle" }]
+        "hooks": [{ "type": "command", "command": "ai-beacon idle" }]
       }
     ]
   }

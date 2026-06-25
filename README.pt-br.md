@@ -45,10 +45,10 @@ Adicione ao `~/.claude/settings.json` (mescle com o conteúdo existente):
 ```json
 {
   "hooks": {
-    "UserPromptSubmit": [{ "hooks": [{ "type": "command", "command": "beacon thinking", "timeout": 1 }] }],
-    "Notification":     [{ "hooks": [{ "type": "command", "command": "beacon waiting",  "timeout": 1 }] }],
-    "Stop":             [{ "hooks": [{ "type": "command", "command": "beacon done",     "timeout": 1 }] }],
-    "SessionEnd":       [{ "hooks": [{ "type": "command", "command": "beacon idle",     "timeout": 1 }] }]
+    "UserPromptSubmit": [{ "hooks": [{ "type": "command", "command": "ai-beacon thinking", "timeout": 1 }] }],
+    "Notification":     [{ "hooks": [{ "type": "command", "command": "ai-beacon waiting",  "timeout": 1 }] }],
+    "Stop":             [{ "hooks": [{ "type": "command", "command": "ai-beacon done",     "timeout": 1 }] }],
+    "SessionEnd":       [{ "hooks": [{ "type": "command", "command": "ai-beacon idle",     "timeout": 1 }] }]
   }
 }
 ```
@@ -56,7 +56,7 @@ Adicione ao `~/.claude/settings.json` (mescle com o conteúdo existente):
 ### 5 — Subir o daemon
 
 ```bash
-beacon daemon
+ai-beacon daemon
 ```
 
 O daemon mantém a porta serial aberta e roteia os eventos dos hooks para o LED. Deixe rodando em um terminal, ou configure com launchd (veja [Avançado](#avançado)).
@@ -64,10 +64,10 @@ O daemon mantém a porta serial aberta e roteia os eventos dos hooks para o LED.
 ### 6 — Testar
 
 ```bash
-beacon status       # mostra saúde do daemon e dispositivo
-beacon thinking     # LED fica amarelo
-beacon done         # LED fica verde + 2 beeps
-beacon idle         # LED apaga
+ai-beacon status       # mostra saúde do daemon e dispositivo
+ai-beacon thinking     # LED fica amarelo
+ai-beacon done         # LED fica verde + 2 beeps
+ai-beacon idle         # LED apaga
 ```
 
 ---
@@ -77,13 +77,13 @@ beacon idle         # LED apaga
 ```
 Claude Code ──(hooks)──▶ beacon CLI
                               │
-                        beacon daemon  ──(USB serial)──▶ RP2040 Zero
+                        ai-beacon daemon  ──(USB serial)──▶ RP2040 Zero
                               │                               │
                          Unix socket                    LED NeoPixel
                                                         Buzzer (opt.)
 ```
 
-A CLI envia o nome do estado para o daemon via Unix socket (`~/.beacon/beacon.sock`). O daemon mantém a porta serial aberta (evitando resets USB) e encaminha o comando ao RP2040, que executa a animação.
+A CLI envia o nome do estado para o daemon via Unix socket (`~/.ai-beacon/ai-beacon.sock`). O daemon mantém a porta serial aberta (evitando resets USB) e encaminha o comando ao RP2040, que executa a animação.
 
 Os hooks sempre saem com `0` — nunca bloqueiam o Claude Code, mesmo sem o daemon rodando.
 
@@ -92,10 +92,10 @@ Os hooks sempre saem com `0` — nunca bloqueiam o Claude Code, mesmo sem o daem
 ## Referência da CLI
 
 ```
-beacon <estado>            # envia via daemon (padrão)
-beacon <estado> --direct   # ignora o daemon, escreve direto na serial
-beacon daemon              # sobe o daemon (bloqueia)
-beacon status              # saúde do daemon + dispositivo
+ai-beacon <estado>            # envia via daemon (padrão)
+ai-beacon <estado> --direct   # ignora o daemon, escreve direto na serial
+ai-beacon daemon              # sobe o daemon (bloqueia)
+ai-beacon status              # saúde do daemon + dispositivo
 ```
 
 Estados: `thinking`, `waiting`, `done`, `idle`, `error`
@@ -107,12 +107,12 @@ Estados: `thinking`, `waiting`, `done`, `idle`, `error`
 ### Subir o daemon automaticamente no login (launchd)
 
 ```bash
-cat > ~/Library/LaunchAgents/com.beacon.daemon.plist << 'EOF'
+cat > ~/Library/LaunchAgents/com.ai-beacon.daemon.plist << 'EOF'
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-  <key>Label</key>             <string>com.beacon.daemon</string>
+  <key>Label</key>             <string>com.ai-beacon.daemon</string>
   <key>ProgramArguments</key>  <array><string>/Users/SEU_USUARIO/.local/bin/beacon</string><string>daemon</string></array>
   <key>RunAtLoad</key>         <true/>
   <key>KeepAlive</key>         <true/>
@@ -121,7 +121,7 @@ cat > ~/Library/LaunchAgents/com.beacon.daemon.plist << 'EOF'
 </dict>
 </plist>
 EOF
-launchctl load ~/Library/LaunchAgents/com.beacon.daemon.plist
+launchctl load ~/Library/LaunchAgents/com.ai-beacon.daemon.plist
 ```
 
 Substitua `SEU_USUARIO` pelo seu nome de usuário.
@@ -175,7 +175,7 @@ Se a auto-descoberta não encontrar a placa:
 
 ```bash
 export BEACON_SERIAL_PORT=/dev/cu.usbmodem1234
-beacon thinking
+ai-beacon thinking
 ```
 
 ---
