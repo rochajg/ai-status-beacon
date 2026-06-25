@@ -1,0 +1,29 @@
+README.md
+  s_d2193d6df48b9d::t_8da97da26808f1 199
+  s_d2193d6df48b9d::t_65bfb3285f78cd 186-189
+  s_d2193d6df48b9d::t_2da68e08e29614 25,33,35-39
+  s_d2193d6df48b9d::t_ccba5f000afcbf 131,133-135,138,142,145-152,156-158,161-163,166-169
+README.pt-br.md
+  s_d2193d6df48b9d::t_21c68dfccd3324 186-189
+  s_d2193d6df48b9d::t_1743b064932bf1 131,133-135,138,142,145-152,156-158,161-163,166-169
+  s_d2193d6df48b9d::t_94d8671f28075d 199
+  s_d2193d6df48b9d::t_740fcb735d6147 25,33,35-39
+scripts/flash.sh
+  s_d2193d6df48b9d::t_f7c4e22bd2943d 2-3,6,8-10,14-23
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "87546babcd48813f25f749fac0006ee50cba605a",
+  "prompts": {},
+  "sessions": {
+    "s_d2193d6df48b9d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3f7c14a-c303-4a75-893e-d3fdd192e1ae",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Jordan Rocha <70rd23@gmail.com>"
+    }
+  }
+}
