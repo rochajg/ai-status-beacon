@@ -1,0 +1,59 @@
+README.md
+  s_d2193d6df48b9d::t_a7cf1c1c9c27e6 48-51,59,67-70,80,86,95-98,110,115,124,178
+.superpowers/host-config/task-1-report.md
+  s_d2193d6df48b9d::t_f0ac7ff32b2f71 1-35
+.superpowers/host-config/task-3-report.md
+  s_d2193d6df48b9d::t_f0ac7ff32b2f71 1-42
+.superpowers/c-firmware/progress.md
+  s_d2193d6df48b9d::t_f0ac7ff32b2f71 1-14
+.superpowers/go/task-4-report.md
+  s_d2193d6df48b9d::t_f0ac7ff32b2f71 1-29
+scripts/install.sh
+  s_d2193d6df48b9d::t_31492566a9ccb5 8,34,55,57
+.superpowers/go/task-1-report.md
+  s_d2193d6df48b9d::t_f0ac7ff32b2f71 1-28
+host/internal/config/config.go
+  s_d2193d6df48b9d::t_d238a30866f6bc 45
+  s_d2193d6df48b9d::t_8c204dce356b05 48
+.superpowers/host-config/progress.md
+  s_d2193d6df48b9d::t_f0ac7ff32b2f71 1-11
+.superpowers/go/task-2-report.md
+  s_d2193d6df48b9d::t_f0ac7ff32b2f71 1-12
+claude/settings.example.json
+  s_d2193d6df48b9d::t_31492566a9ccb5 5,10,15,20
+.superpowers/host-config/task-1-brief.md
+  s_d2193d6df48b9d::t_f0ac7ff32b2f71 1-323
+.superpowers/go/task-3-report.md
+  s_d2193d6df48b9d::t_f0ac7ff32b2f71 1-56
+host/main.go
+  s_d2193d6df48b9d::t_4c1bb586770a39 38,41
+  s_d2193d6df48b9d::t_8c204dce356b05 150-158,168,179,187,191,200,208
+.superpowers/host-config/task-2-report.md
+  s_d2193d6df48b9d::t_f0ac7ff32b2f71 1-30
+.superpowers/go/progress.md
+  s_d2193d6df48b9d::t_f0ac7ff32b2f71 1-14
+.superpowers/go/task-5-report.md
+  s_d2193d6df48b9d::t_f0ac7ff32b2f71 1-197
+.superpowers/host-config/task-4-report.md
+  s_d2193d6df48b9d::t_f0ac7ff32b2f71 1-76
+README.pt-br.md
+  s_d2193d6df48b9d::t_a7cf1c1c9c27e6 48-51,59,67-70,80,86,95-98,110,115,124,178
+.github/workflows/release.yml
+  s_d2193d6df48b9d::t_31492566a9ccb5 39,44-45,92,104,110,125-126
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "ecac2346907e991925961cadbde6a648f814d6ee",
+  "prompts": {},
+  "sessions": {
+    "s_d2193d6df48b9d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3f7c14a-c303-4a75-893e-d3fdd192e1ae",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Jordan Rocha <70rd23@gmail.com>"
+    }
+  }
+}
