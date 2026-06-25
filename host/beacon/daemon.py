@@ -37,15 +37,15 @@ def run(
     srv.listen(8)
     srv.settimeout(0.5)  # allows the loop to periodically check stop_event
 
-    ser: serial.Serial | None = None
+    ser_holder: dict = {"ser": None}
     serial_lock = threading.Lock()
     log.info("Daemon listening on %s", socket_path)
 
     try:
         while stop_event is None or not stop_event.is_set():
             # Keep serial connection alive
-            if ser is None or not ser.is_open:
-                ser = _connect_serial(baud, stop_event)
+            if ser_holder["ser"] is None or not ser_holder["ser"].is_open:
+                ser_holder["ser"] = _connect_serial(baud, stop_event)
 
             try:
                 conn, _ = srv.accept()
@@ -54,7 +54,7 @@ def run(
 
             threading.Thread(
                 target=_handle_connection,
-                args=(conn, ser, serial_lock),
+                args=(conn, ser_holder, serial_lock),
                 daemon=True,
             ).start()
     finally:
@@ -63,8 +63,8 @@ def run(
             os.unlink(socket_path)
         except FileNotFoundError:
             pass
-        if ser is not None and ser.is_open:
-            ser.close()
+        if ser_holder["ser"] is not None and ser_holder["ser"].is_open:
+            ser_holder["ser"].close()
 
 
 def _connect_serial(
@@ -98,7 +98,7 @@ def _connect_serial(
 
 def _handle_connection(
     conn: socket.socket,
-    ser: "serial.Serial | None",
+    ser_holder: dict,
     serial_lock: threading.Lock,
 ) -> None:
     """Read one command from a client connection and forward it to serial."""
@@ -110,6 +110,7 @@ def _handle_connection(
         if cmd not in VALID_STATES:
             log.debug("Ignored unknown command: %r", cmd)
             return
+        ser = ser_holder["ser"]
         if ser is None or not ser.is_open:
             log.warning("Serial not available, dropping command %r", cmd)
             return

@@ -35,13 +35,19 @@ def send_direct(state: str, port: str, timeout_s: float = 0.3) -> bool:
 
 
 def send_to_socket(state: str, socket_path: str, timeout_s: float = 0.3) -> bool:
-    """Send state\n to the daemon Unix socket. Returns True on success."""
+    """Send state\n to a UNIX domain socket. Returns True on success, False on any error."""
+    sock = None
     try:
         sock = _socket.socket(_socket.AF_UNIX, _socket.SOCK_STREAM)
         sock.settimeout(timeout_s)
         sock.connect(socket_path)
         sock.sendall(f"{state}\n".encode())
-        sock.close()
         return True
     except Exception:
         return False
+    finally:
+        if sock is not None:
+            try:
+                sock.close()
+            except Exception:
+                pass
