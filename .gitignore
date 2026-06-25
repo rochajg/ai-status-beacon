@@ -17,5 +17,9 @@ venv/
 # Tools
 .mpremote/
 
+# C firmware build artifacts
+firmware/build/
+firmware/test/build/
+
 # Local config
 .env

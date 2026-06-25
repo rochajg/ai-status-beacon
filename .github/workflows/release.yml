@@ -45,21 +45,31 @@ jobs:
           path: dist/beacon-${{ matrix.suffix }}
 
   firmware:
-    name: Package firmware
+    name: Build firmware (UF2)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive   # pulls pico-sdk and its own submodules
 
-      - name: Zip firmware
+      - name: Install ARM toolchain + CMake
         run: |
-          mkdir -p dist
-          zip -j dist/firmware.zip firmware/main.py firmware/states.py firmware/hardware.py
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends \
+            gcc-arm-none-eabi libnewlib-arm-none-eabi cmake ninja-build
+
+      - name: Build
+        run: |
+          mkdir -p firmware/build
+          cd firmware/build
+          cmake .. -G Ninja -DCMAKE_BUILD_TYPE=Release
+          ninja beacon
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: firmware
-          path: dist/firmware.zip
+          path: firmware/build/beacon.uf2
 
   release:
     name: Create release
@@ -77,7 +87,7 @@ jobs:
       - name: Generate checksums
         run: |
           cd dist
-          sha256sum beacon-darwin-arm64 beacon-darwin-amd64 firmware.zip > checksums.txt
+          sha256sum beacon-darwin-arm64 beacon-darwin-amd64 beacon.uf2 > checksums.txt
           cat checksums.txt
 
       - name: Create GitHub Release
@@ -104,12 +114,15 @@ jobs:
             curl -fsSL https://raw.githubusercontent.com/${{ github.repository }}/main/scripts/install.sh | bash
             ```
 
+            ### Flash the firmware
+            Download `beacon.uf2`, hold BOOT on the RP2040 Zero, plug in via USB, and drag `beacon.uf2` to the `RPI-RP2` drive. No MicroPython required.
+
             ---
             See [README](https://github.com/${{ github.repository }}#readme) for full setup instructions.
           files: |
             dist/beacon-darwin-arm64
             dist/beacon-darwin-amd64
-            dist/firmware.zip
+            dist/beacon.uf2
             dist/checksums.txt
           draft: false
           prerelease: ${{ contains(github.ref_name, '-') }}

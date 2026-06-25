@@ -22,11 +22,7 @@ A USB physical status indicator for Claude Code (and other AI agents). A small R
 
 ## Quick Start
 
-### 1 — Flash MicroPython
-
-Hold BOOT on the RP2040 Zero while plugging it in. It appears as a USB drive (`RPI-RP2`). Download [MicroPython for RP2040](https://micropython.org/download/RPI_PICO/) and copy the `.uf2` file to the drive. The board reboots automatically.
-
-### 2 — Install the beacon CLI
+### 1 — Install the beacon CLI
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/rochajg/ai-status-beacon/main/scripts/install.sh | bash
@@ -34,12 +30,13 @@ curl -fsSL https://raw.githubusercontent.com/rochajg/ai-status-beacon/main/scrip
 
 This downloads the pre-built binary for your Mac (Apple Silicon or Intel) and places it in `~/.local/bin/beacon`.
 
-### 3 — Flash the firmware
+### 2 — Flash the firmware
 
-```bash
-pip install mpremote
-beacon-flash    # or run scripts/flash.sh manually
-```
+Download `beacon.uf2` from the [latest release](https://github.com/rochajg/ai-status-beacon/releases/latest).
+
+Hold BOOT on the RP2040 Zero while plugging it in. Drag `beacon.uf2` onto the `RPI-RP2` drive that appears. The board reboots automatically.
+
+That's it — no MicroPython, no extra tools.
 
 ### 4 — Configure Claude Code hooks
 
@@ -131,41 +128,45 @@ Replace `YOUR_USER` with your username.
 
 ### Using a different board
 
-The RP2040 Zero has its NeoPixel on **GP16**. If you use a standard Raspberry Pi Pico (LED on GP25) or another board, edit `firmware/hardware.py`:
+The RP2040 Zero has its NeoPixel on **GP16**. If you use a different board, edit `firmware/src/config.h`:
 
-```python
-_np = neopixel.NeoPixel(machine.Pin(16), 1)  # ← change pin here
-_buzzer = machine.PWM(machine.Pin(15))        # ← change pin here
+```c
+#define LED_PIN     16   /* change to your board's LED pin */
+#define BUZZER_PIN  15   /* change to your board's buzzer pin */
 ```
 
-Then reflash: `./scripts/flash.sh`
+Rebuild and reflash with `./scripts/flash.sh`.
 
 ### Customising colours and timings
 
-Edit `firmware/states.py` and reflash.
+Edit `firmware/src/config.h` and rebuild.
 
 **Change colours** (RGB, 0–255):
-```python
-YELLOW = (200, 140, 0)   # thinking
-GREEN  = (0, 200, 0)     # done / waiting
-RED    = (200, 0, 0)     # error
+```c
+#define DEF_THINKING_R  200
+#define DEF_THINKING_G  140
+#define DEF_THINKING_B    0   /* yellow */
+
+#define DEF_DONE_R        0
+#define DEF_DONE_G      200
+#define DEF_DONE_B        0   /* green */
 ```
 
 **Change durations**:
-```python
-DONE_DURATION_MS    = 30_000   # how long "done" stays green (ms)
-WAITING_DURATION_MS = 60_000   # how long "waiting" blinks before auto-idle (ms)
+```c
+#define DEF_DONE_MS     30000   /* how long "done" stays before auto-idle (ms) */
+#define DEF_WAITING_MS  60000   /* how long "waiting" blinks before auto-idle (ms) */
 ```
 
-**Disable the buzzer** — in `firmware/hardware.py`, replace `beep()` with a no-op:
-```python
-def beep(freq=1000, duration_ms=80):
-    pass  # buzzer disabled
+**Disable the buzzer**:
+```c
+#define DEF_BUZZER_ENABLED  0
 ```
 
-**Change buzzer frequency** (pitch) — in `firmware/states.py`, the `done` state calls `hw.beep(1200, 80)`. Adjust the frequency (Hz) and duration (ms):
-```python
-hw.beep(880, 100)   # lower pitch, longer beep
+**Change buzzer frequency** (pitch):
+```c
+#define DEF_BUZZER_FREQ     880   /* Hz — lower pitch */
+#define DEF_BUZZER_DUR_MS   100   /* ms per beep — longer */
 ```
 
 ### Override the serial port
@@ -182,7 +183,10 @@ beacon thinking
 ## Project Structure
 
 ```
-firmware/      MicroPython code (runs on the RP2040)
+firmware/      C firmware (pico-sdk, produces beacon.uf2)
+  src/         Source files (config.h, parser, led, buzzer, states, main)
+  test/        Native unit tests for the parser (no RP2040 needed)
+  pico-sdk/    pico-sdk submodule (pinned to 2.1.1)
 host/          Go source for the beacon CLI
 scripts/       flash.sh, install.sh
 claude/        settings.example.json for Claude Code hooks
@@ -192,7 +196,7 @@ claude/        settings.example.json for Claude Code hooks
 
 ## Contributing
 
-Issues and PRs welcome. The firmware is plain MicroPython; the host is a single Go binary with no CGO dependencies.
+Issues and PRs welcome. The firmware is C (pico-sdk); the host is a single Go binary with no CGO dependencies.
 
 ## Licence
 
