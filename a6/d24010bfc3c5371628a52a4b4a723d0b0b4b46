@@ -1,0 +1,23 @@
+host/internal/daemon/daemon.go
+  s_d2193d6df48b9d::t_042e5968eb886c 23
+  s_d2193d6df48b9d::t_bd381b6a9f93a1 84-97
+  s_d2193d6df48b9d::t_288bae7148abfa 155
+host/internal/daemon/daemon_test.go
+  s_d2193d6df48b9d::t_a0f2caec621199 128
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "a6d24010bfc3c5371628a52a4b4a723d0b0b4b46",
+  "prompts": {},
+  "sessions": {
+    "s_d2193d6df48b9d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3f7c14a-c303-4a75-893e-d3fdd192e1ae",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Jordan Rocha <70rd23@gmail.com>"
+    }
+  }
+}
