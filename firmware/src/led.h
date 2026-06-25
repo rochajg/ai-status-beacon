@@ -1,7 +1,7 @@
 #pragma once
 #include <stdint.h>
 
-void led_init(uint pin);
+void led_init(uint32_t pin);
 
 /**
  * Set the NeoPixel color. brightness (0-255) is applied as a global

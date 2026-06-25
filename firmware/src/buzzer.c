@@ -3,13 +3,13 @@
 #include "hardware/gpio.h"
 #include "hardware/clocks.h"
 
-void buzzer_init(uint pin) {
+void buzzer_init(uint32_t pin) {
     gpio_set_function(pin, GPIO_FUNC_PWM);
     uint slice = pwm_gpio_to_slice_num(pin);
     pwm_set_enabled(slice, false);
 }
 
-void buzzer_start(uint pin, uint freq_hz) {
+void buzzer_start(uint32_t pin, uint32_t freq_hz) {
     uint slice = pwm_gpio_to_slice_num(pin);
     uint chan  = pwm_gpio_to_channel(pin);
 
@@ -24,6 +24,6 @@ void buzzer_start(uint pin, uint freq_hz) {
     pwm_set_enabled(slice, true);
 }
 
-void buzzer_stop(uint pin) {
+void buzzer_stop(uint32_t pin) {
     pwm_set_enabled(pwm_gpio_to_slice_num(pin), false);
 }

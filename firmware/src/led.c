@@ -6,7 +6,7 @@
 static PIO  _pio = pio0;
 static uint _sm  = 0;
 
-void led_init(uint pin) {
+void led_init(uint32_t pin) {
     uint offset = pio_add_program(_pio, &ws2812_program);
     ws2812_program_init(_pio, _sm, offset, pin, 800000, false);
 }
