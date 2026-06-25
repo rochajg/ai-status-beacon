@@ -1,0 +1,23 @@
+firmware/src/led.h
+  s_d2193d6df48b9d::t_b3465b01effa77 1-12
+firmware/src/main.c
+  s_d2193d6df48b9d::t_0559a07c05a942 1-10
+firmware/src/led.c
+  s_d2193d6df48b9d::t_05e626eafe7bab 1-32
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "66bfc384b296071c128006d4b70519cee0a4fbfc",
+  "prompts": {},
+  "sessions": {
+    "s_d2193d6df48b9d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3f7c14a-c303-4a75-893e-d3fdd192e1ae",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Jordan Rocha <70rd23@gmail.com>"
+    }
+  }
+}
