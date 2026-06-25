@@ -8,11 +8,18 @@ FIRMWARE_DIR="$REPO_ROOT/firmware"
 BUILD_DIR="$FIRMWARE_DIR/build"
 
 # ── Check ARM toolchain ────────────────────────────────────────
-if ! command -v arm-none-eabi-gcc &>/dev/null; then
-  echo "ARM toolchain not found. Install it:"
-  echo "  macOS:   brew install arm-none-eabi-gcc"
-  echo "  Ubuntu:  sudo apt-get install gcc-arm-none-eabi g++-arm-none-eabi \\"
-  echo "             libnewlib-arm-none-eabi libstdc++-arm-none-eabi-newlib"
+# Verify the toolchain has the newlib spec files (nosys.specs).
+# brew install arm-none-eabi-gcc is NOT enough — it omits newlib.
+# Use: brew install --cask gcc-arm-embedded  (full official toolchain)
+if ! arm-none-eabi-gcc -print-file-name=nosys.specs 2>/dev/null | grep -q nosys; then
+  echo "ERROR: ARM toolchain missing nosys.specs (newlib runtime)."
+  echo ""
+  echo "Install the full official ARM GNU Embedded Toolchain:"
+  echo "  macOS:  brew install --cask gcc-arm-embedded"
+  echo "  Ubuntu: sudo apt-get install gcc-arm-none-eabi libnewlib-arm-none-eabi \\"
+  echo "            libstdc++-arm-none-eabi-newlib cmake ninja-build"
+  echo ""
+  echo "NOTE: 'brew install arm-none-eabi-gcc' is a bare compiler and will NOT work."
   exit 1
 fi
 
