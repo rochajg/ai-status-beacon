@@ -65,3 +65,38 @@ func writeState(state string, p portWriter) error {
 	_, err := fmt.Fprintf(p, "%s\n", state)
 	return err
 }
+
+// SendDirectRaw opens the serial port and writes cmd verbatim (no newline added).
+// cmd must already include the trailing newline. Used by the CLI when the command
+// already includes params assembled by buildCommand.
+func SendDirectRaw(cmd, port string, timeout time.Duration) error {
+	p, err := goserial.Open(port, &goserial.Mode{BaudRate: 115200})
+	if err != nil {
+		return err
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), timeout)
+	defer cancel()
+
+	errCh := make(chan error, 1)
+	go func() {
+		errCh <- sendDirectRaw(cmd, p, timeout)
+	}()
+
+	select {
+	case err := <-errCh:
+		return err
+	case <-ctx.Done():
+		p.Close()
+		<-errCh
+		return ctx.Err()
+	}
+}
+
+// sendDirectRaw is the testable core: writes cmd verbatim to any portWriter and
+// closes it when done.
+func sendDirectRaw(cmd string, p portWriter, _ time.Duration) error {
+	defer p.Close()
+	_, err := fmt.Fprint(p, cmd)
+	return err
+}

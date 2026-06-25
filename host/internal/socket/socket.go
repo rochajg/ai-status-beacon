@@ -8,16 +8,17 @@ import (
 	"time"
 )
 
-// SendToSocket connects to the Unix socket and writes "state\n".
-// Always closes the connection. Returns error on any failure.
-func SendToSocket(state, socketPath string, timeout time.Duration) error {
+// SendToSocket connects to the Unix socket and writes cmd verbatim.
+// cmd must include the trailing newline. Always closes the connection.
+// Returns error on any failure.
+func SendToSocket(cmd, socketPath string, timeout time.Duration) error {
 	conn, err := net.DialTimeout("unix", socketPath, timeout)
 	if err != nil {
 		return err
 	}
 	defer conn.Close()
 	conn.SetDeadline(time.Now().Add(timeout))
-	_, err = fmt.Fprintf(conn, "%s\n", state)
+	_, err = fmt.Fprint(conn, cmd)
 	return err
 }
 

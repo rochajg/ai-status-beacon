@@ -38,7 +38,7 @@ func TestSendToSocketWritesStateLine(t *testing.T) {
 		received <- string(buf[:n])
 	})
 
-	if err := SendToSocket("thinking", sock, timeout); err != nil {
+	if err := SendToSocket("thinking\n", sock, timeout); err != nil {
 		t.Fatal(err)
 	}
 	if got := <-received; got != "thinking\n" {
@@ -48,7 +48,7 @@ func TestSendToSocketWritesStateLine(t *testing.T) {
 
 func TestSendToSocketErrorWhenNoServer(t *testing.T) {
 	sock := filepath.Join(t.TempDir(), "missing.sock")
-	if err := SendToSocket("thinking", sock, 50*time.Millisecond); err == nil {
+	if err := SendToSocket("thinking\n", sock, 50*time.Millisecond); err == nil {
 		t.Fatal("expected error, got nil")
 	}
 }
