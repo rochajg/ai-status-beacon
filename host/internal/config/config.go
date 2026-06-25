@@ -1,6 +1,7 @@
 package config
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -52,7 +53,7 @@ func DefaultPath() string {
 func Load(path string) (Config, error) {
 	var cfg Config
 	data, err := os.ReadFile(path)
-	if os.IsNotExist(err) {
+	if errors.Is(err, os.ErrNotExist) {
 		return cfg, nil
 	}
 	if err != nil {
@@ -187,7 +188,9 @@ func Set(path, key, value string) error {
 	// Load existing file as a raw map so we can update one key.
 	raw := map[string]any{}
 	if data, err := os.ReadFile(path); err == nil {
-		_ = toml.Unmarshal(data, &raw)
+		if err := toml.Unmarshal(data, &raw); err != nil {
+			return fmt.Errorf("existing config is invalid TOML: %w", err)
+		}
 	}
 
 	// Navigate/create nested map for dotted key.
@@ -231,7 +234,7 @@ func tomlValue(key, value string) any {
 // Reset deletes the config file. Returns nil if the file does not exist.
 func Reset(path string) error {
 	err := os.Remove(path)
-	if os.IsNotExist(err) {
+	if errors.Is(err, os.ErrNotExist) {
 		return nil
 	}
 	return err
