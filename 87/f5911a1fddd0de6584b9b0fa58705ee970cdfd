@@ -1,0 +1,20 @@
+docs/superpowers/specs/2026-06-25-c-firmware-host-config-design.md
+  s_d2193d6df48b9d::t_0d3e9fe267f1c5 1-262,266-345
+  s_d2193d6df48b9d::t_9b1f7e0659247a 263-265
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "87f5911a1fddd0de6584b9b0fa58705ee970cdfd",
+  "prompts": {},
+  "sessions": {
+    "s_d2193d6df48b9d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3f7c14a-c303-4a75-893e-d3fdd192e1ae",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Jordan Rocha <70rd23@gmail.com>"
+    }
+  }
+}
