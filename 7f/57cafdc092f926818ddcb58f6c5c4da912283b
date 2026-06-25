@@ -1,0 +1,21 @@
+host/internal/socket/socket.go
+  s_d2193d6df48b9d::t_b3e2d9f164bc1b 1-49
+host/internal/socket/socket_test.go
+  s_d2193d6df48b9d::t_610c85451b2772 1-90
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "7f57cafdc092f926818ddcb58f6c5c4da912283b",
+  "prompts": {},
+  "sessions": {
+    "s_d2193d6df48b9d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3f7c14a-c303-4a75-893e-d3fdd192e1ae",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Jordan Rocha <70rd23@gmail.com>"
+    }
+  }
+}
