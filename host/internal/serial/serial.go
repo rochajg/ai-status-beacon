@@ -1,6 +1,7 @@
 package serial
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -29,17 +30,37 @@ func FindPort() string {
 }
 
 // SendDirect opens the serial port, writes "state\n", and closes.
-// Always closes the port, even on error.
-func SendDirect(state, port string, _ time.Duration) error {
+// The timeout is honoured via a context deadline that cancels the write if it
+// does not complete in time (go.bug.st/serial does not expose SetWriteDeadline,
+// so we enforce the budget with a goroutine + context).
+func SendDirect(state, port string, timeout time.Duration) error {
 	p, err := goserial.Open(port, &goserial.Mode{BaudRate: 115200})
 	if err != nil {
 		return err
 	}
-	return writeState(state, p, 0)
+
+	ctx, cancel := context.WithTimeout(context.Background(), timeout)
+	defer cancel()
+
+	errCh := make(chan error, 1)
+	go func() {
+		errCh <- writeState(state, p)
+	}()
+
+	select {
+	case err := <-errCh:
+		return err
+	case <-ctx.Done():
+		// Abort the blocked write by closing the port, then drain the result.
+		p.Close()
+		<-errCh
+		return ctx.Err()
+	}
 }
 
-// writeState is the testable core: writes "state\n" to any portWriter.
-func writeState(state string, p portWriter, _ time.Duration) error {
+// writeState is the testable core: writes "state\n" to any portWriter and
+// closes it when done.
+func writeState(state string, p portWriter) error {
 	defer p.Close()
 	_, err := fmt.Fprintf(p, "%s\n", state)
 	return err

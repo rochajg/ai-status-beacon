@@ -3,7 +3,6 @@ package serial
 import (
 	"io"
 	"testing"
-	"time"
 )
 
 func TestFindPortEnvOverride(t *testing.T) {
@@ -29,7 +28,7 @@ func TestWriteStateAppendsNewline(t *testing.T) {
 		done <- string(buf[:n])
 	}()
 
-	if err := writeState("thinking", mock, 300*time.Millisecond); err != nil {
+	if err := writeState("thinking", mock); err != nil {
 		t.Fatal(err)
 	}
 	if got := <-done; got != "thinking\n" {
@@ -39,7 +38,7 @@ func TestWriteStateAppendsNewline(t *testing.T) {
 
 func TestWriteStateReturnsErrorOnWriteFailure(t *testing.T) {
 	mock := &mockPort{WriteCloser: failWriter{}}
-	if err := writeState("done", mock, 300*time.Millisecond); err == nil {
+	if err := writeState("done", mock); err == nil {
 		t.Fatal("expected error, got nil")
 	}
 }

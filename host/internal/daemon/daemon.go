@@ -18,6 +18,9 @@ import (
 
 const reconnectInterval = 2 * time.Second
 
+// validStates lists the commands that map to physical LED states on the beacon.
+// "ping" is intentionally absent: it is handled as a protocol verb in handle()
+// before this map is consulted, so it never reaches the state-dispatch path.
 var validStates = map[string]bool{
 	"thinking": true, "waiting": true, "done": true,
 	"idle": true, "error": true,
@@ -114,9 +117,14 @@ func runWithOpener(ctx context.Context, socketPath string, openPort func() (port
 
 		select {
 		case <-ctx.Done():
+			// Close ln immediately to unblock the pending Accept goroutine;
+			// the deferred ln.Close() + os.Remove are still present as safety
+			// nets (closing a net.Listener twice is safe).
+			ln.Close()
 			mu.Lock()
 			if current != nil {
 				current.Close()
+				current = nil
 			}
 			mu.Unlock()
 			return
