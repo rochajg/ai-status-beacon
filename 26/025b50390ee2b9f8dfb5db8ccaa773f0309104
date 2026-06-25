@@ -1,0 +1,29 @@
+.github/workflows/release.yml
+  s_d2193d6df48b9d::t_8684d56762e4ee 1-112
+host/main.go
+  s_d2193d6df48b9d::t_26f0b4c08704f1 17-19
+  s_d2193d6df48b9d::t_c6a10a1b80b425 51-54
+  s_d2193d6df48b9d::t_7500e32a66f2f6 127-129,134,136-137
+README.md
+  s_d2193d6df48b9d::t_d45db820d31d02 1-199
+README.pt-br.md
+  s_d2193d6df48b9d::t_7d4811c146d113 1-199
+scripts/install.sh
+  s_d2193d6df48b9d::t_22a3adf4ffaca6 1-57
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "26025b50390ee2b9f8dfb5db8ccaa773f0309104",
+  "prompts": {},
+  "sessions": {
+    "s_d2193d6df48b9d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3f7c14a-c303-4a75-893e-d3fdd192e1ae",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Jordan Rocha <70rd23@gmail.com>"
+    }
+  }
+}
