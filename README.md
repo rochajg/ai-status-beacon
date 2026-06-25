@@ -29,7 +29,7 @@ Hold BOOT on the RP2040 Zero while plugging it in. It appears as a USB drive (`R
 ### 2 — Install the beacon CLI
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/ai-status-beacon/main/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/rochajg/ai-status-beacon/main/scripts/install.sh | bash
 ```
 
 This downloads the pre-built binary for your Mac (Apple Silicon or Intel) and places it in `~/.local/bin/beacon`.

@@ -29,7 +29,7 @@ Segure BOOT no RP2040 Zero enquanto pluga o cabo. Ele aparece como um drive USB 
 ### 2 — Instalar o beacon CLI
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/ai-status-beacon/main/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/rochajg/ai-status-beacon/main/scripts/install.sh | bash
 ```
 
 Isso baixa o binário pré-compilado para o seu Mac (Apple Silicon ou Intel) e coloca em `~/.local/bin/beacon`.

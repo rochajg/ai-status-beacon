@@ -3,7 +3,7 @@
 # Usage: curl -fsSL <url>/scripts/install.sh | bash
 set -euo pipefail
 
-REPO="YOUR_USERNAME/ai-status-beacon"
+REPO="rochajg/ai-status-beacon"
 INSTALL_DIR="${BEACON_INSTALL_DIR:-$HOME/.local/bin}"
 BINARY="$INSTALL_DIR/beacon"
 
