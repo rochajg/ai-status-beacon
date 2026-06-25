@@ -1,0 +1,23 @@
+docs/superpowers/plans/2026-06-25-c-firmware.md
+  s_d2193d6df48b9d::t_47937d8a3930d1 1-543,545,548,554,562-1260
+  s_d2193d6df48b9d::t_a57f70f2684a1c 544,546-547,549-553,555-561
+docs/superpowers/plans/2026-06-25-host-config.md
+  s_d2193d6df48b9d::t_aa710b5f1bc2ad 1-338,340-1019
+  s_d2193d6df48b9d::t_e6326a059e0845 339
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "cb3f6423b92af3e4f7c3efb9f90985f74385c5a6",
+  "prompts": {},
+  "sessions": {
+    "s_d2193d6df48b9d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3f7c14a-c303-4a75-893e-d3fdd192e1ae",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Jordan Rocha <70rd23@gmail.com>"
+    }
+  }
+}
