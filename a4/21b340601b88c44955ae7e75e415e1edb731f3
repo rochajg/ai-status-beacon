@@ -1,0 +1,20 @@
+.github/workflows/release.yml
+  s_d2193d6df48b9d::t_02a5f9d7d19346 37-39
+  s_d2193d6df48b9d::t_63859f6d7753c5 54-56
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "a421b340601b88c44955ae7e75e415e1edb731f3",
+  "prompts": {},
+  "sessions": {
+    "s_d2193d6df48b9d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3f7c14a-c303-4a75-893e-d3fdd192e1ae",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Jordan Rocha <70rd23@gmail.com>"
+    }
+  }
+}
