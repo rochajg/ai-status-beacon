@@ -1,0 +1,22 @@
+host/internal/config/config.go
+  s_d2193d6df48b9d::t_42449ec98c1394 4
+  s_d2193d6df48b9d::t_4f363605864c77 191-193
+  s_d2193d6df48b9d::t_c1a907f4b270ea 56
+  s_d2193d6df48b9d::t_44ba3ed2c8ebd1 237
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "b266a2bc90a5136291c2c3a774c7714bd8162010",
+  "prompts": {},
+  "sessions": {
+    "s_d2193d6df48b9d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3f7c14a-c303-4a75-893e-d3fdd192e1ae",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Jordan Rocha <70rd23@gmail.com>"
+    }
+  }
+}
