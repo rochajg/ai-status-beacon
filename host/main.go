@@ -14,6 +14,9 @@ import (
 	"beacon/internal/socket"
 )
 
+// version is set at build time via -ldflags "-X main.version=v1.2.3"
+var version = "dev"
+
 const (
 	baud    = 115200
 	timeout = 300 * time.Millisecond
@@ -45,6 +48,10 @@ func main() {
 	}
 
 	switch args[0] {
+	case "version", "--version", "-v":
+		fmt.Println(version)
+		os.Exit(0)
+
 	case "daemon":
 		ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 		defer stop()
@@ -117,11 +124,15 @@ func runStatus() int {
 }
 
 func printUsage() {
-	fmt.Println(`Usage:
+	fmt.Printf(`AI Status Beacon %s
+
+Usage:
   beacon <state>             send state via daemon socket (exit 0 always)
   beacon <state> --direct    send state directly to serial (exit 0 always)
   beacon daemon              run the daemon (blocking)
   beacon status              show daemon and device health (exit 0 or 1)
+  beacon version             print version
 
-States: thinking, waiting, done, idle, error, ping`)
+States: thinking, waiting, done, idle, error
+`, version)
 }
