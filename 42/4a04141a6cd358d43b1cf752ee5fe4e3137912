@@ -1,0 +1,21 @@
+docs/superpowers/plans/2026-06-25-go-host.md
+  s_d2193d6df48b9d::t_595c19a40e7264 845-846,850
+  s_d2193d6df48b9d::t_1a70d4a7e0ee82 857-865
+  s_d2193d6df48b9d::t_87465d0ba542a0 1-844,847-849,851-856,866-1099
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "424a04141a6cd358d43b1cf752ee5fe4e3137912",
+  "prompts": {},
+  "sessions": {
+    "s_d2193d6df48b9d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3f7c14a-c303-4a75-893e-d3fdd192e1ae",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Jordan Rocha <70rd23@gmail.com>"
+    }
+  }
+}
