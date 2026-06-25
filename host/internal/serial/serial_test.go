@@ -3,6 +3,7 @@ package serial
 import (
 	"io"
 	"testing"
+	"time"
 )
 
 func TestFindPortEnvOverride(t *testing.T) {
@@ -39,6 +40,32 @@ func TestWriteStateAppendsNewline(t *testing.T) {
 func TestWriteStateReturnsErrorOnWriteFailure(t *testing.T) {
 	mock := &mockPort{WriteCloser: failWriter{}}
 	if err := writeState("done", mock); err == nil {
+		t.Fatal("expected error, got nil")
+	}
+}
+
+func TestSendDirectRawWritesVerbatim(t *testing.T) {
+	pr, pw := io.Pipe()
+	mock := &mockPort{WriteCloser: pw}
+
+	done := make(chan string, 1)
+	go func() {
+		buf := make([]byte, 64)
+		n, _ := pr.Read(buf)
+		done <- string(buf[:n])
+	}()
+
+	if err := sendDirectRaw("thinking color=0,100,255\n", mock, 300*time.Millisecond); err != nil {
+		t.Fatal(err)
+	}
+	if got := <-done; got != "thinking color=0,100,255\n" {
+		t.Fatalf("want %q, got %q", "thinking color=0,100,255\n", got)
+	}
+}
+
+func TestSendDirectRawReturnsErrorOnWriteFailure(t *testing.T) {
+	mock := &mockPort{WriteCloser: failWriter{}}
+	if err := sendDirectRaw("done\n", mock, 300*time.Millisecond); err == nil {
 		t.Fatal("expected error, got nil")
 	}
 }

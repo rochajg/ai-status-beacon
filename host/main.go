@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/signal"
 	"path/filepath"
+	"strings"
 	"syscall"
 	"time"
 
@@ -79,8 +80,21 @@ func main() {
 	}
 }
 
+// buildCommand assembles the extended serial command for state, resolving
+// host config into key=value params. Falls back to bare "state\n" when
+// no config keys are set for this state.
+func buildCommand(state string, cfg config.Config) string {
+	params := cfg.Resolve(state)
+	if len(params) == 0 {
+		return state + "\n"
+	}
+	return state + " " + strings.Join(params, " ") + "\n"
+}
+
 func runSocket(state string) {
-	_ = socket.SendToSocket(state, socketPath, timeout)
+	cfg, _ := config.Load(config.DefaultPath())
+	cmd := buildCommand(state, cfg)
+	_ = socket.SendToSocket(cmd, socketPath, timeout)
 }
 
 func runDirect(state string) {
@@ -88,7 +102,9 @@ func runDirect(state string) {
 	if port == "" {
 		return
 	}
-	_ = serial.SendDirect(state, port, timeout)
+	cfg, _ := config.Load(config.DefaultPath())
+	cmd := buildCommand(state, cfg)
+	_ = serial.SendDirectRaw(cmd, port, timeout)
 }
 
 func runStatus() int {
