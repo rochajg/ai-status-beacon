@@ -1,0 +1,23 @@
+firmware/CMakeLists.txt
+  s_d2193d6df48b9d::t_de198cccf9eb8e 1-42
+.gitignore
+  s_d2193d6df48b9d::t_ae060489355190 20-23
+firmware/src/config.h
+  s_d2193d6df48b9d::t_ac01b38a1bc0d1 1-37
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "040251a49608fab863aea17f1bf9eea14b6e66d7",
+  "prompts": {},
+  "sessions": {
+    "s_d2193d6df48b9d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f3f7c14a-c303-4a75-893e-d3fdd192e1ae",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Jordan Rocha <70rd23@gmail.com>"
+    }
+  }
+}
